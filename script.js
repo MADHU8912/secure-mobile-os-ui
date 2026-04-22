@@ -1,7 +1,7 @@
 const normalPin = "1234";
 const duressPin = "9999";
 let currentPin = "";
-let batteryLevel = 18;
+let batteryLevel = 86;
 
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach(screen => {
@@ -56,6 +56,23 @@ function submitPin() {
   }
 }
 
+function startFaceUnlock() {
+  const faceStatus = document.getElementById("faceStatus");
+  faceStatus.textContent = "Scanning face...";
+  setTimeout(() => {
+    faceStatus.textContent = "Face recognized";
+    setTimeout(() => {
+      faceStatus.textContent = "Scanning face...";
+      showScreen("homeScreen");
+    }, 700);
+  }, 2000);
+}
+
+function openSmsScreen() {
+  toggleNotifications(false);
+  showScreen("smsScreen");
+}
+
 function lockDevice() {
   currentPin = "";
   updateDots();
@@ -72,20 +89,21 @@ function toggleTheme() {
   document.body.classList.toggle("light-mode");
 }
 
-function toggleNotifications() {
-  document.getElementById("notificationPanel").classList.toggle("hidden");
+function toggleNotifications(forceClose = null) {
+  const panel = document.getElementById("notificationPanel");
+  if (forceClose === false) {
+    panel.classList.add("hidden");
+    return;
+  }
+  panel.classList.toggle("hidden");
+}
+
+function toggleControlCenter() {
+  document.getElementById("controlCenter").classList.toggle("hidden");
 }
 
 function toggleAppDrawer() {
   document.getElementById("appDrawer").classList.toggle("hidden");
-}
-
-function acceptCall() {
-  document.getElementById("callStatus").textContent = "Call connected securely";
-}
-
-function rejectCall() {
-  document.getElementById("callStatus").textContent = "Call rejected";
 }
 
 function updateClock() {

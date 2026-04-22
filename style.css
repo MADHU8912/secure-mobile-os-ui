@@ -111,9 +111,9 @@ body.light-mode .wallpaper {
 .panel {
   margin: 0 10px 10px;
   padding: 12px;
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(15, 23, 42, 0.95);
   border-radius: 16px;
-  max-height: 220px;
+  max-height: 260px;
   overflow-y: auto;
 }
 
@@ -127,6 +127,7 @@ body.light-mode .wallpaper {
   border-radius: 12px;
   margin-bottom: 8px;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .screen {
@@ -169,6 +170,10 @@ body.light-mode .wallpaper {
 #lockClock {
   font-size: 34px;
   margin: 6px 0 14px;
+}
+
+.unlock-options {
+  margin-bottom: 14px;
 }
 
 .pin-dots {
@@ -223,6 +228,14 @@ button:hover {
   background: #1d4ed8;
 }
 
+.secondary-main {
+  background: #334155;
+}
+
+.secondary-main:hover {
+  background: #475569;
+}
+
 .fingerprint {
   margin-top: 15px;
   font-size: 15px;
@@ -236,9 +249,25 @@ button:hover {
 }
 
 #message,
-#callStatus {
+#faceStatus {
   margin-top: 12px;
   color: #fecaca;
+}
+
+.face-ring {
+  width: 130px;
+  height: 130px;
+  border: 4px solid #60a5fa;
+  border-radius: 50%;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1.5s infinite;
+}
+
+.face-icon {
+  font-size: 52px;
 }
 
 .app-grid,
@@ -272,7 +301,8 @@ button:hover {
 }
 
 .setting-row,
-.security-card {
+.security-card,
+.slider-box {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   padding: 12px;
@@ -284,6 +314,15 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.slider-box label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.slider-box input[type="range"] {
+  width: 100%;
 }
 
 .switch {
@@ -324,17 +363,6 @@ button:hover {
   transform: translateX(20px);
 }
 
-.call-avatar {
-  font-size: 60px;
-  margin: 20px 0;
-}
-
-.call-actions {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -343,5 +371,17 @@ button:hover {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(96, 165, 250, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
   }
 }

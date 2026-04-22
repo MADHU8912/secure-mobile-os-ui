@@ -32,14 +32,65 @@
 
     <div class="top-actions">
       <button class="mini-btn" onclick="toggleNotifications()">🔔 Notifications</button>
+      <button class="mini-btn" onclick="toggleControlCenter()">🎛 Control Center</button>
       <button class="mini-btn" onclick="toggleAppDrawer()">⬆ Apps</button>
+    </div>
+
+    <div id="controlCenter" class="panel hidden">
+      <h3>Control Center</h3>
+
+      <div class="setting-row">
+        <span>📶 WiFi</span>
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <span>🟦 Bluetooth</span>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <span>✈ Airplane Mode</span>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <span>🔦 Flashlight</span>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="slider-box">
+        <label>☀ Brightness</label>
+        <input type="range" min="20" max="100" value="70" />
+      </div>
+
+      <div class="slider-box">
+        <label>🔊 Volume</label>
+        <input type="range" min="0" max="100" value="60" />
+      </div>
+
+      <button onclick="toggleControlCenter()">Close</button>
     </div>
 
     <div id="notificationPanel" class="panel hidden">
       <h3>Notification Center</h3>
+      <div class="notification" onclick="openSmsScreen()">
+        📩 Secure SMS from Alex — Tap to open
+      </div>
       <div class="notification">🔔 Security scan completed</div>
-      <div class="notification">📩 1 encrypted message received</div>
-      <div class="notification">⚠ Permission changed for Camera app</div>
+      <div class="notification">⚠ Camera permission updated</div>
       <button onclick="toggleNotifications()">Close</button>
     </div>
 
@@ -51,8 +102,8 @@
         <div class="app-card" onclick="showScreen('filesScreen')">📁<span>Files</span></div>
         <div class="app-card" onclick="showScreen('notesScreen')">📝<span>Notes</span></div>
         <div class="app-card" onclick="showScreen('terminalScreen')">💻<span>Terminal</span></div>
-        <div class="app-card" onclick="showScreen('callScreen')">📞<span>Call</span></div>
-        <div class="app-card" onclick="showScreen('settingsScreen')">⚙<span>Settings</span></div>
+        <div class="app-card" onclick="showScreen('smsScreen')">📩<span>SMS</span></div>
+        <div class="app-card" onclick="showScreen('faceUnlockScreen')">🙂<span>Face Unlock</span></div>
         <div class="app-card" onclick="showScreen('securityScreen')">🔐<span>Security</span></div>
       </div>
       <button onclick="toggleAppDrawer()">Close</button>
@@ -63,6 +114,10 @@
       <h1>Secure OS</h1>
       <p id="lockDate">Wednesday, 22 April</p>
       <h2 id="lockClock">09:41</h2>
+
+      <div class="unlock-options">
+        <button onclick="showScreen('faceUnlockScreen')">🙂 Face Unlock</button>
+      </div>
 
       <div class="pin-dots">
         <span class="dot" id="dot1"></span>
@@ -91,6 +146,16 @@
       <p id="message"></p>
     </div>
 
+    <div id="faceUnlockScreen" class="screen center-screen">
+      <h2>Face Unlock</h2>
+      <div class="face-ring">
+        <div class="face-icon">🙂</div>
+      </div>
+      <p id="faceStatus">Scanning face...</p>
+      <button onclick="startFaceUnlock()">Start Scan</button>
+      <button onclick="showScreen('lockScreen')">⬅ Back</button>
+    </div>
+
     <div id="homeScreen" class="screen">
       <h2>Home Screen</h2>
       <div class="app-grid">
@@ -99,11 +164,23 @@
         <div class="app-card" onclick="showScreen('filesScreen')">📁<span>Files</span></div>
         <div class="app-card" onclick="showScreen('notesScreen')">📝<span>Secure Notes</span></div>
         <div class="app-card" onclick="showScreen('terminalScreen')">💻<span>Terminal</span></div>
-        <div class="app-card" onclick="showScreen('callScreen')">📞<span>Call</span></div>
+        <div class="app-card" onclick="showScreen('smsScreen')">📩<span>SMS</span></div>
         <div class="app-card" onclick="showScreen('settingsScreen')">⚙<span>Settings</span></div>
         <div class="app-card" onclick="showScreen('securityScreen')">🔐<span>Security</span></div>
       </div>
       <button onclick="lockDevice()">Lock Device</button>
+    </div>
+
+    <div id="smsScreen" class="screen">
+      <h2>Incoming SMS</h2>
+      <div class="security-card">
+        <p><b>Sender:</b> Alex</p>
+        <p><b>Time:</b> 10:12 AM</p>
+        <p><b>Message:</b> Your secure mobile UI build completed successfully.</p>
+      </div>
+      <button>Reply</button>
+      <button class="secondary-main">Mark as Secure</button>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
     <div id="cameraScreen" class="screen">
@@ -135,18 +212,6 @@
     <div id="terminalScreen" class="screen">
       <h2>Terminal</h2>
       <p>Secure shell demo enabled.</p>
-      <button onclick="showScreen('homeScreen')">⬅ Back</button>
-    </div>
-
-    <div id="callScreen" class="screen center-screen">
-      <h2>Incoming Secure Call</h2>
-      <div class="call-avatar">👤</div>
-      <p>Private Contact</p>
-      <div class="call-actions">
-        <button onclick="acceptCall()">✅ Accept</button>
-        <button onclick="rejectCall()">❌ Reject</button>
-      </div>
-      <p id="callStatus"></p>
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
@@ -219,14 +284,6 @@
             <span class="slider"></span>
           </label>
         </div>
-
-        <div class="setting-row">
-          <span>📂 Files Access</span>
-          <label class="switch">
-            <input type="checkbox" checked />
-            <span class="slider"></span>
-          </label>
-        </div>
       </div>
 
       <div class="security-card">
@@ -234,11 +291,7 @@
         <p>Duress PIN demo: Enabled</p>
       </div>
 
-      <div class="security-card">
-        <h3>Emergency Lock</h3>
-        <button onclick="lockDevice()">Activate Lock</button>
-      </div>
-
+      <button onclick="lockDevice()">Activate Lock</button>
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
