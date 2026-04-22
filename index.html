@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Mobile OS UI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="phone">
+
+    <div class="status-bar">
+      <span>9:41</span>
+      <span>📶 WiFi 🔋100%</span>
+    </div>
+
+    <div id="lockScreen" class="screen active">
+      <h1>Secure OS</h1>
+      <p>Enter your password</p>
+      <input type="password" id="passwordInput" placeholder="Enter password" />
+      <button onclick="unlockDevice()">Unlock</button>
+      <p id="message"></p>
+    </div>
+
+    <div id="homeScreen" class="screen">
+      <h2>Home Screen</h2>
+      <div class="apps">
+        <button onclick="showScreen('settingsScreen')">⚙ Settings</button>
+        <button onclick="showScreen('securityScreen')">🔒 Security</button>
+        <button onclick="lockDevice()">🔐 Lock</button>
+      </div>
+    </div>
+
+    <div id="settingsScreen" class="screen">
+      <h2>Settings</h2>
+      <p>Normal Password: <b>1234</b></p>
+      <p>Duress Password: <b>9999</b></p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="securityScreen" class="screen">
+      <h2>Security Dashboard</h2>
+      <p>Privacy Protection: Enabled</p>
+      <p>Sandbox Apps: Active</p>
+      <p>Duress Password Demo: Enabled</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="wipeScreen" class="screen">
+      <h2>Emergency Action Triggered</h2>
+      <p>Duress password accepted.</p>
+      <p>Demo data cleared. Returning to setup state.</p>
+      <button onclick="resetDemo()">Restart Demo</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
