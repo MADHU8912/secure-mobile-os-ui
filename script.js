@@ -13,8 +13,11 @@ function unlockDevice() {
   const message = document.getElementById("message");
 
   if (input === normalPassword) {
-    message.textContent = "";
-    showScreen("homeScreen");
+    message.textContent = "Unlock successful";
+    setTimeout(() => {
+      message.textContent = "";
+      showScreen("homeScreen");
+    }, 600);
   } else if (input === duressPassword) {
     message.textContent = "";
     localStorage.clear();
@@ -26,6 +29,10 @@ function unlockDevice() {
   document.getElementById("passwordInput").value = "";
 }
 
+function swipeUnlock() {
+  document.getElementById("message").textContent = "Swipe verified. Enter password to continue.";
+}
+
 function lockDevice() {
   showScreen("lockScreen");
 }
@@ -33,3 +40,29 @@ function lockDevice() {
 function resetDemo() {
   showScreen("lockScreen");
 }
+
+function toggleTheme() {
+  document.body.classList.toggle("light-mode");
+}
+
+function updateClock() {
+  const now = new Date();
+
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const date = now.toLocaleDateString([], {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  document.getElementById("timeNow").textContent = time;
+  document.getElementById("lockClock").textContent = time;
+  document.getElementById("lockDate").textContent = date;
+}
+
+updateClock();
+setInterval(updateClock, 1000);

@@ -8,31 +8,115 @@
 </head>
 <body>
   <div class="phone">
+    <div class="wallpaper"></div>
 
     <div class="status-bar">
-      <span>9:41</span>
-      <span>📶 WiFi 🔋100%</span>
+      <span id="timeNow">9:41</span>
+      <span>📶 WiFi <span id="batteryLevel">87%</span></span>
+    </div>
+
+    <div class="notification-bar">
+      <div class="notification">🔔 2 new secure alerts</div>
+      <div class="notification">📩 1 fake message notification</div>
     </div>
 
     <div id="lockScreen" class="screen active">
-      <h1>Secure OS</h1>
-      <p>Enter your password</p>
-      <input type="password" id="passwordInput" placeholder="Enter password" />
-      <button onclick="unlockDevice()">Unlock</button>
-      <p id="message"></p>
+      <div class="lock-top">
+        <div class="lock-icon">🔒</div>
+        <h1>Secure OS</h1>
+        <p id="lockDate">Wednesday, 22 April</p>
+        <h2 id="lockClock">09:41</h2>
+      </div>
+
+      <div class="unlock-box">
+        <input type="password" id="passwordInput" placeholder="Enter password" />
+        <button onclick="unlockDevice()">Unlock</button>
+        <button class="secondary-btn" onclick="swipeUnlock()">Swipe to Unlock ➜</button>
+        <div class="fingerprint">🫆 Fingerprint Ready</div>
+        <p class="forgot-text">Forgot password?</p>
+        <p id="message"></p>
+      </div>
     </div>
 
     <div id="homeScreen" class="screen">
       <h2>Home Screen</h2>
-      <div class="apps">
-        <button onclick="showScreen('settingsScreen')">⚙ Settings</button>
-        <button onclick="showScreen('securityScreen')">🔒 Security</button>
-        <button onclick="lockDevice()">🔐 Lock</button>
+
+      <div class="app-grid">
+        <div class="app-card" onclick="showScreen('cameraScreen')">📷<span>Camera</span></div>
+        <div class="app-card" onclick="showScreen('galleryScreen')">🖼<span>Gallery</span></div>
+        <div class="app-card" onclick="showScreen('filesScreen')">📁<span>Files</span></div>
+        <div class="app-card" onclick="showScreen('notesScreen')">📝<span>Secure Notes</span></div>
+        <div class="app-card" onclick="showScreen('terminalScreen')">💻<span>Terminal</span></div>
+        <div class="app-card" onclick="showScreen('settingsScreen')">⚙<span>Settings</span></div>
+        <div class="app-card" onclick="showScreen('securityScreen')">🔐<span>Security</span></div>
+        <div class="app-card" onclick="lockDevice()">🔒<span>Lock</span></div>
       </div>
+    </div>
+
+    <div id="cameraScreen" class="screen">
+      <h2>Camera</h2>
+      <p>Front Camera: Ready</p>
+      <p>Rear Camera: Active</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="galleryScreen" class="screen">
+      <h2>Gallery</h2>
+      <p>Photos are protected in secure mode.</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="filesScreen" class="screen">
+      <h2>Files</h2>
+      <p>Encrypted Files: 12</p>
+      <p>Recent File: notes.txt</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="notesScreen" class="screen">
+      <h2>Secure Notes</h2>
+      <p>Private notes are locked and sandboxed.</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="terminalScreen" class="screen">
+      <h2>Terminal</h2>
+      <p>Secure shell demo enabled.</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
     <div id="settingsScreen" class="screen">
       <h2>Settings</h2>
+
+      <div class="setting-row">
+        <span>🌙 Dark / Light Mode</span>
+        <button onclick="toggleTheme()">Toggle</button>
+      </div>
+
+      <div class="setting-row">
+        <span>🔊 Sound</span>
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <span>📶 WiFi</span>
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <span>✈ Airplane Mode</span>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
       <p>Normal Password: <b>1234</b></p>
       <p>Duress Password: <b>9999</b></p>
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
@@ -40,9 +124,29 @@
 
     <div id="securityScreen" class="screen">
       <h2>Security Dashboard</h2>
-      <p>Privacy Protection: Enabled</p>
-      <p>Sandbox Apps: Active</p>
-      <p>Duress Password Demo: Enabled</p>
+
+      <div class="security-card">
+        <h3>Privacy Status</h3>
+        <p>Protection Level: High</p>
+      </div>
+
+      <div class="security-card">
+        <h3>App Permissions</h3>
+        <p>Camera: Allowed</p>
+        <p>Microphone: Blocked</p>
+        <p>Location: Allowed only while using app</p>
+      </div>
+
+      <div class="security-card">
+        <h3>Duress Mode</h3>
+        <p>Duress password demo: Enabled</p>
+      </div>
+
+      <div class="security-card">
+        <h3>Emergency Lock</h3>
+        <button onclick="lockDevice()">Activate Lock</button>
+      </div>
+
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
@@ -52,7 +156,6 @@
       <p>Demo data cleared. Returning to setup state.</p>
       <button onclick="resetDemo()">Restart Demo</button>
     </div>
-
   </div>
 
   <script src="script.js"></script>
