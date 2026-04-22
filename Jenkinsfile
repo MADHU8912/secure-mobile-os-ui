@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME      = 'nikhilabba12/secure-mobile-os-ui'
-        IMAGE_TAG       = 'latest'
-        CONTAINER_NAME  = 'secure-mobile-container'
-        HOST_PORT       = '8082'
-        CONTAINER_PORT  = '80'
+        IMAGE_NAME = 'nikhilabba12/secure-mobile-os-ui'
+        IMAGE_TAG = 'latest'
+        CONTAINER_NAME = 'secure-mobile-container'
+        HOST_PORT = '8082'
+        CONTAINER_PORT = '80'
     }
 
     stages {
@@ -46,6 +46,12 @@ pipeline {
             }
         }
 
+        stage('Docker Logout Old Session') {
+            steps {
+                bat 'docker logout || exit 0'
+            }
+        }
+
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
@@ -53,7 +59,7 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
+                    bat '@echo off && echo %DOCKER_PASS%| docker login -u %DOCKER_USER% --password-stdin'
                 }
             }
         }
@@ -91,7 +97,7 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-                echo 'Add your Render deploy hook later'
+                echo 'Add Render deploy hook after Docker login works'
             }
         }
     }
