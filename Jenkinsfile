@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = 'nikhilabba12/secure-mobile-os-ui'
         IMAGE_TAG = 'latest'
         CONTAINER_NAME = 'secure-mobile-container'
-        HOST_PORT = '8081'
+        HOST_PORT = '8082'
         CONTAINER_PORT = '80'
     }
 
