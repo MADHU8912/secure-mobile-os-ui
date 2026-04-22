@@ -10,47 +10,100 @@
   <div class="phone">
     <div class="wallpaper"></div>
 
+    <div id="bootScreen" class="screen active center-screen">
+      <div class="boot-logo">🔐</div>
+      <h1>Secure OS</h1>
+      <p>Secure boot in progress...</p>
+      <div class="boot-bar">
+        <div id="bootProgress"></div>
+      </div>
+    </div>
+
     <div class="status-bar">
-      <span id="timeNow">9:41</span>
-      <span>📶 WiFi <span id="batteryLevel">87%</span></span>
+      <span id="timeNow">09:41</span>
+      <div class="status-right">
+        <span>📶 WiFi</span>
+        <div class="battery">
+          <div id="batteryFill"></div>
+        </div>
+        <span id="batteryText">86%</span>
+      </div>
     </div>
 
-    <div class="notification-bar">
-      <div class="notification">🔔 2 new secure alerts</div>
-      <div class="notification">📩 1 fake message notification</div>
+    <div class="top-actions">
+      <button class="mini-btn" onclick="toggleNotifications()">🔔 Notifications</button>
+      <button class="mini-btn" onclick="toggleAppDrawer()">⬆ Apps</button>
     </div>
 
-    <div id="lockScreen" class="screen active">
-      <div class="lock-top">
-        <div class="lock-icon">🔒</div>
-        <h1>Secure OS</h1>
-        <p id="lockDate">Wednesday, 22 April</p>
-        <h2 id="lockClock">09:41</h2>
+    <div id="notificationPanel" class="panel hidden">
+      <h3>Notification Center</h3>
+      <div class="notification">🔔 Security scan completed</div>
+      <div class="notification">📩 1 encrypted message received</div>
+      <div class="notification">⚠ Permission changed for Camera app</div>
+      <button onclick="toggleNotifications()">Close</button>
+    </div>
+
+    <div id="appDrawer" class="panel hidden">
+      <h3>App Drawer</h3>
+      <div class="drawer-grid">
+        <div class="app-card" onclick="showScreen('cameraScreen')">📷<span>Camera</span></div>
+        <div class="app-card" onclick="showScreen('galleryScreen')">🖼<span>Gallery</span></div>
+        <div class="app-card" onclick="showScreen('filesScreen')">📁<span>Files</span></div>
+        <div class="app-card" onclick="showScreen('notesScreen')">📝<span>Notes</span></div>
+        <div class="app-card" onclick="showScreen('terminalScreen')">💻<span>Terminal</span></div>
+        <div class="app-card" onclick="showScreen('callScreen')">📞<span>Call</span></div>
+        <div class="app-card" onclick="showScreen('settingsScreen')">⚙<span>Settings</span></div>
+        <div class="app-card" onclick="showScreen('securityScreen')">🔐<span>Security</span></div>
+      </div>
+      <button onclick="toggleAppDrawer()">Close</button>
+    </div>
+
+    <div id="lockScreen" class="screen center-screen">
+      <div class="lock-icon">🔒</div>
+      <h1>Secure OS</h1>
+      <p id="lockDate">Wednesday, 22 April</p>
+      <h2 id="lockClock">09:41</h2>
+
+      <div class="pin-dots">
+        <span class="dot" id="dot1"></span>
+        <span class="dot" id="dot2"></span>
+        <span class="dot" id="dot3"></span>
+        <span class="dot" id="dot4"></span>
       </div>
 
-      <div class="unlock-box">
-        <input type="password" id="passwordInput" placeholder="Enter password" />
-        <button onclick="unlockDevice()">Unlock</button>
-        <button class="secondary-btn" onclick="swipeUnlock()">Swipe to Unlock ➜</button>
-        <div class="fingerprint">🫆 Fingerprint Ready</div>
-        <p class="forgot-text">Forgot password?</p>
-        <p id="message"></p>
+      <div class="keypad">
+        <button onclick="pressPin('1')">1</button>
+        <button onclick="pressPin('2')">2</button>
+        <button onclick="pressPin('3')">3</button>
+        <button onclick="pressPin('4')">4</button>
+        <button onclick="pressPin('5')">5</button>
+        <button onclick="pressPin('6')">6</button>
+        <button onclick="pressPin('7')">7</button>
+        <button onclick="pressPin('8')">8</button>
+        <button onclick="pressPin('9')">9</button>
+        <button onclick="clearPin()">⌫</button>
+        <button onclick="pressPin('0')">0</button>
+        <button onclick="submitPin()">✓</button>
       </div>
+
+      <div class="fingerprint">🫆 Fingerprint Ready</div>
+      <p class="forgot-text">Forgot PIN?</p>
+      <p id="message"></p>
     </div>
 
     <div id="homeScreen" class="screen">
       <h2>Home Screen</h2>
-
       <div class="app-grid">
         <div class="app-card" onclick="showScreen('cameraScreen')">📷<span>Camera</span></div>
         <div class="app-card" onclick="showScreen('galleryScreen')">🖼<span>Gallery</span></div>
         <div class="app-card" onclick="showScreen('filesScreen')">📁<span>Files</span></div>
         <div class="app-card" onclick="showScreen('notesScreen')">📝<span>Secure Notes</span></div>
         <div class="app-card" onclick="showScreen('terminalScreen')">💻<span>Terminal</span></div>
+        <div class="app-card" onclick="showScreen('callScreen')">📞<span>Call</span></div>
         <div class="app-card" onclick="showScreen('settingsScreen')">⚙<span>Settings</span></div>
         <div class="app-card" onclick="showScreen('securityScreen')">🔐<span>Security</span></div>
-        <div class="app-card" onclick="lockDevice()">🔒<span>Lock</span></div>
       </div>
+      <button onclick="lockDevice()">Lock Device</button>
     </div>
 
     <div id="cameraScreen" class="screen">
@@ -82,6 +135,18 @@
     <div id="terminalScreen" class="screen">
       <h2>Terminal</h2>
       <p>Secure shell demo enabled.</p>
+      <button onclick="showScreen('homeScreen')">⬅ Back</button>
+    </div>
+
+    <div id="callScreen" class="screen center-screen">
+      <h2>Incoming Secure Call</h2>
+      <div class="call-avatar">👤</div>
+      <p>Private Contact</p>
+      <div class="call-actions">
+        <button onclick="acceptCall()">✅ Accept</button>
+        <button onclick="rejectCall()">❌ Reject</button>
+      </div>
+      <p id="callStatus"></p>
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
@@ -117,8 +182,6 @@
         </label>
       </div>
 
-      <p>Normal Password: <b>1234</b></p>
-      <p>Duress Password: <b>9999</b></p>
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
@@ -132,14 +195,43 @@
 
       <div class="security-card">
         <h3>App Permissions</h3>
-        <p>Camera: Allowed</p>
-        <p>Microphone: Blocked</p>
-        <p>Location: Allowed only while using app</p>
+
+        <div class="setting-row">
+          <span>📷 Camera</span>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <span>🎤 Microphone</span>
+          <label class="switch">
+            <input type="checkbox" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <span>📍 Location</span>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <span>📂 Files Access</span>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
       </div>
 
       <div class="security-card">
         <h3>Duress Mode</h3>
-        <p>Duress password demo: Enabled</p>
+        <p>Duress PIN demo: Enabled</p>
       </div>
 
       <div class="security-card">
@@ -150,9 +242,9 @@
       <button onclick="showScreen('homeScreen')">⬅ Back</button>
     </div>
 
-    <div id="wipeScreen" class="screen">
+    <div id="wipeScreen" class="screen center-screen">
       <h2>Emergency Action Triggered</h2>
-      <p>Duress password accepted.</p>
+      <p>Duress PIN accepted.</p>
       <p>Demo data cleared. Returning to setup state.</p>
       <button onclick="resetDemo()">Restart Demo</button>
     </div>
