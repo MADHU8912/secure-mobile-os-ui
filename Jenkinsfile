@@ -31,6 +31,7 @@ pipeline {
         stage('Build Report') {
             steps {
                 bat '''
+                @echo off
                 (
                   echo ==========================
                   echo BUILD REPORT
@@ -79,25 +80,30 @@ pipeline {
         stage('Remove Old Container') {
             steps {
                 bat '''
+                @echo off
                 docker ps -a --format "{{.Names}}" | findstr /R "^%CONTAINER_NAME%$" >nul
                 if %ERRORLEVEL%==0 (
                     docker rm -f %CONTAINER_NAME%
                 ) else (
                     echo No old container found
                 )
+                exit /b 0
                 '''
             }
         }
 
         stage('Run Container') {
             steps {
-                bat 'docker run -d -p %HOST_PORT%:%CONTAINER_PORT% --name %CONTAINER_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
+                bat '''
+                @echo off
+                docker run -d -p %HOST_PORT%:%CONTAINER_PORT% --name %CONTAINER_NAME% %IMAGE_NAME%:%IMAGE_TAG%
+                '''
             }
         }
 
         stage('Deploy to Render') {
             steps {
-                echo 'Add Render deploy hook after Docker login works'
+                echo 'Add Render deploy hook here after local container run works'
             }
         }
     }
@@ -108,7 +114,7 @@ pipeline {
             echo 'Pipeline finished'
         }
         success {
-            echo 'Build, push, pull, and run completed successfully'
+            echo 'Build, push, pull, remove, and run completed successfully'
         }
         failure {
             echo 'Pipeline failed'
