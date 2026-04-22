@@ -3,11 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'nikhilabba12/secure-mobile-os-ui'
-<<<<<<< HEAD
         IMAGE_TAG = 'latest'
-=======
-        IMAGE_TAG  = 'latest'
->>>>>>> c5b12a9541d4495fa45412619fd6cf3a24cccc6b
         CONTAINER_NAME = 'secure-mobile-container'
         HOST_PORT = '8081'
         CONTAINER_PORT = '80'
@@ -94,13 +90,7 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-<<<<<<< HEAD
                 echo 'Add render deploy hook later'
-=======
-                withCredentials([string(credentialsId: 'render-deploy-hook', variable: 'RENDER_HOOK')]) {
-                    bat 'curl -X POST "%RENDER_HOOK%"'
-                }
->>>>>>> c5b12a9541d4495fa45412619fd6cf3a24cccc6b
             }
         }
     }
@@ -111,14 +101,10 @@ pipeline {
             echo 'Pipeline finished'
         }
         success {
-<<<<<<< HEAD
             echo 'Build successful'
-=======
-            echo 'Build, push, pull, local run, and Render deploy completed'
->>>>>>> c5b12a9541d4495fa45412619fd6cf3a24cccc6b
         }
         failure {
-            echo 'Pipeline failed - check the stage logs'
+            echo 'Pipeline failed'
         }
     }
 }
