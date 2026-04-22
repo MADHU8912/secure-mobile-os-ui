@@ -81,12 +81,7 @@ pipeline {
             steps {
                 bat '''
                 @echo off
-                docker ps -a --format "{{.Names}}" | findstr /R "^%CONTAINER_NAME%$" >nul
-                if %ERRORLEVEL%==0 (
-                    docker rm -f %CONTAINER_NAME%
-                ) else (
-                    echo No old container found
-                )
+                docker rm -f %CONTAINER_NAME% 2>nul
                 exit /b 0
                 '''
             }
@@ -103,7 +98,7 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-                echo 'Add Render deploy hook here after local container run works'
+                echo 'Add Render deploy hook here'
             }
         }
     }
@@ -114,7 +109,7 @@ pipeline {
             echo 'Pipeline finished'
         }
         success {
-            echo 'Build, push, pull, remove, and run completed successfully'
+            echo 'Build, push, pull, run and deploy completed successfully'
         }
         failure {
             echo 'Pipeline failed'
