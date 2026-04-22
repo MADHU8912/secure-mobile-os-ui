@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'nikhilabba12/secure-mobile-os-ui'
-        IMAGE_TAG = 'latest'
-        CONTAINER_NAME = 'secure-mobile-container'
-        HOST_PORT = '8082'
-        CONTAINER_PORT = '80'
+        IMAGE_NAME      = 'nikhilabba12/secure-mobile-os-ui'
+        IMAGE_TAG       = 'latest'
+        CONTAINER_NAME  = 'secure-mobile-container'
+        HOST_PORT       = '8082'
+        CONTAINER_PORT  = '80'
     }
 
     stages {
@@ -38,6 +38,7 @@ pipeline {
                   echo Job Name: %JOB_NAME%
                   echo Build Number: %BUILD_NUMBER%
                   echo Image Name: %IMAGE_NAME%:%IMAGE_TAG%
+                  echo Container Name: %CONTAINER_NAME%
                   echo Date: %DATE%
                   echo Time: %TIME%
                 ) > build-report.txt
@@ -90,7 +91,7 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-                echo 'Add render deploy hook later'
+                echo 'Add your Render deploy hook later'
             }
         }
     }
@@ -101,7 +102,7 @@ pipeline {
             echo 'Pipeline finished'
         }
         success {
-            echo 'Build successful'
+            echo 'Build, push, pull, and run completed successfully'
         }
         failure {
             echo 'Pipeline failed'
